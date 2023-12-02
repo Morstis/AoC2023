@@ -1,4 +1,4 @@
-import { reduce } from "lodash";
+import { head, reduce, slice, tail } from "lodash";
 import { read } from "../@util/read";
 
 const r = (x: string | undefined) =>
@@ -19,14 +19,7 @@ const rev = (x: string) => x.split("").reverse().join("");
 
 const res = reduce(
   read(1).split(/\n/),
-  (a, b) =>
-    a +
-    +(
-      r(b.match(m)?.filter(Boolean)[0]) +
-      r(rev(b).match(mr)?.filter(Boolean)[0])
-    ),
-
-  0
-);
+  (a, b) => a + +(r(b.match(m)?.filter(Boolean)[0]) + r(rev(b).match(mr)?.filter(Boolean)[0])), 0
+  );
 
 console.log(res);
