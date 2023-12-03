@@ -29,3 +29,34 @@ const res = m.filter((x) => {
 });
 
 console.log(res.map((x) => x[0]).reduce((acc, x) => acc + +x, 0));
+
+const star: { [key: string]: number[] } = {};
+
+m.forEach((x) => {
+  const v = x[0];
+  const row = Math.floor(x.index! / (xs[0].length + 1));
+  const col = x.index! % (xs[0].length + 1);
+
+  for (
+    let x = Math.max(row - 1, 0);
+    x <= Math.min(row + 1, xs.length - 1);
+    x++
+  ) {
+    for (
+      let y = Math.max(col - 1, 0);
+      y <= Math.min(col + v.length, xs[0].length);
+      y++
+    ) {
+      const val = xs[x][y];
+      if (val == "*") {
+        star[[x, y].join()] = [...(star[[x, y].join()] ?? []), +v];
+      }
+    }
+  }
+});
+console.log(
+  Object.values(star)
+    .filter((x) => x.length == 2)
+    .map((x) => x[0] * x[1])
+    .reduce((acc, x) => acc + x, 0)
+);
